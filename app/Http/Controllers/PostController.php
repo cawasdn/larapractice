@@ -14,6 +14,18 @@ class PostController extends Controller
         return view("welcome");
     }
 
+    public function contact()
+    {
+        $people = ['Dan', 'Iel', 'Cawas'];
+        return view("contact", compact('people'));
+    }
+
+
+    public function about($id, $name, $password)
+    {
+        // return view("pages.about")->with('id', $id);
+        return view('pages.about', compact('id', 'name', 'password'));
+    }
 
     //read from db
     public function read()
@@ -46,23 +58,30 @@ class PostController extends Controller
         $post->post = 'new save post;';
         $post->save();
     }
+    //Update data in DB
+    public function update()
+    {
+        Post::where('id', 2)->update(['title' => 'titleupdate', 'post' => 'php']);
+    }
 
     //saving multiple data in table needs to dictate in model
     public function mass_assignment()
     {
         Post::create(['title' => 'NewInsert', 'post' => 'NewPost']);
     }
-
-    public function contact()
+    //Delete Data in DB
+    public function delete()
     {
-        $people = ['Dan', 'Iel', 'Cawas'];
-        return view("contact", compact('people'));
-    }
+        // $post = Post::find(4);
+        // $post->delete();
 
+        // //alternative way
+        // Post::destroy(3);
 
-    public function about($id, $name, $password)
-    {
-        // return view("pages.about")->with('id', $id);
-        return view('pages.about', compact('id', 'name', 'password'));
+        // //alternative way
+        // Post::where('id', 2)->delete(3);
+
+        // //alternative way multiple deletion
+        // Post::destroy([1, 2, 3]);
     }
 }
